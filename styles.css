@@ -1,0 +1,17 @@
+.section-table{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 97vh;
+}
+.form-table{
+    display:flex;
+    width: 400px;
+    height: 400px;
+    flex-wrap: wrap;
+
+}
+.form-table>*{
+    flex:33%;
+    width: 33%;
+}
