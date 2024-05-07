@@ -1,55 +1,22 @@
 <?php
-
 class Queue {
-    private $queue;
-    private $maxSize;
-
-    public function __construct($maxSize = 3) {
-        $this->queue = [];
-        $this->maxSize = $maxSize;
-    }
-
-    public function enqueue($element) {
-        if (count($this->queue) >= $this->maxSize) {
-            array_shift($this->queue); // Remove oldest element
+    private $length;
+    private $elements = [];
+    public function __construct($length, $elements = []) { 
+        $this->length = $length;
+        if (is_array($elements)) {
+            $this->elements = $elements;
         }
-        $this->queue[] = $element;
     }
-
-    public function dequeue() {
-        if ($this->isEmpty()) {
-            return null;
+    public function addCellToQueue ($cell) {
+        $this->elements[] = $cell;
+        if(count($this->elements) > $this->length) { 
+            $cellToRemove = array_shift($this->elements);
+            return $cellToRemove;
         }
-        return array_shift($this->queue);
+        return null;
     }
-
-    public function isEmpty() {
-        return empty($this->queue);
+    public function getElements () { 
+        return $this->elements;
     }
-
-    public function peek() {
-        return reset($this->queue);
-    }
-
-    public function size() {
-        return count($this->queue);
-    }
-
-    public function clear() {
-        $this->queue = [];
-    }
-}
-
-// Example usage
-$queue = new Queue();
-
-$queue->enqueue(1);
-$queue->enqueue(2);
-$queue->enqueue(3);
-$queue->enqueue(4); // This will remove the oldest element (1)
-
-echo "Queue size: " . $queue->size() . "\n"; // Output: Queue size: 3
-
-while (!$queue->isEmpty()) {
-    echo $queue->dequeue() . "\n"; // Output: 2 3 4
 }

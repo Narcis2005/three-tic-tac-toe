@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 97vh;
 }
 .form-table{
     display:flex;
@@ -14,4 +13,105 @@
 .form-table>*{
     flex:33%;
     width: 33%;
+}
+.main-page {
+    background-color: #ebdcb2;
+}
+.main-page .title-section{
+    text-align: center;
+    font-size: 4rem;
+    padding-top: 2rem;
+}
+.main-page .button-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+.main-page .button-section nav{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.main-page .button-section nav>a button {
+    width: 300px;
+    height: 50px;
+    background-color: #464646;
+    color: #fff;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+.singleplayer-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+.singleplayer-buttons button {
+    width: 80px;
+    height: 80px;
+    background-color: #464646;
+    color: #fff;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+.singlepayer-div{
+    display: flex;
+    flex-direction: column;
+
+}
+.singlepayer-div h2{
+    font-size: 2.5rem;
+}
+.board-page{
+    background-color: #ebdcb2;
+}
+/* .board-page form {
+    background: transparent;
+} */
+.board-page .section-table form input{
+    background: transparent;
+    font-size: 7rem;
+}
+.reset-position {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.reset-position input {
+    margin-top: 3%;
+    width: 130px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    background: black;
+    height: 45px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1.235rem;
+    opacity: 0.8;
+}
+.board-page form input.color-X{
+    color: red;
+}
+.board-page form input.color-0{
+    color: green;
+}
+.board-page .player-section{
+    text-align: center;
+    padding: 1rem;
+}
+.board-page .player-section p {
+    font-size: 3rem;
+    font-weight: 700;
+    
 }
