@@ -13,14 +13,15 @@
     </head>
     <?php 
         $X0 = new X0($_SESSION["pos"] ?? null);
+     
 ?>
 
     <body class="board-page">
         <section class="player-section">
             <?php   if(isset($_SESSION["win"])){
             if($_SESSION["win"] == 10) 
-               echo "<p>X won</p>";
-            else echo "<p>0 won</p>";
+               echo ("<p class='color-X'>X won</p>");
+            else echo ("<p class='color-0'>0 won</p>");
             
         }
         else {?>

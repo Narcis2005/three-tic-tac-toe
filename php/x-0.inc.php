@@ -12,7 +12,6 @@
             $_SESSION["queue"] =  $x0Controller->getQueue();
 
             $_SESSION["win"] =  $x0Controller->getIsGameWon();
-            $_SESSION["bestMove"] = $x0Controller->bestMove( "01", $x0Controller->getSet());
             header("Location: ../multiplayer.php");
             break;
         }

@@ -26,8 +26,8 @@
                     <h2>Singleplayer. Play as:</h2>
                     <div class="singleplayer-buttons">
 
-                        <a><button>X</button></a>
-                        <a><button>0</button></a>
+                        <a href="singleplayer.php?player=x"><button>X</button></a>
+                        <!-- <a href="singleplayer.php?player=0"><button>0</button></a> -->
                     </div>
                 </div>
             </nav>

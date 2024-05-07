@@ -5,17 +5,17 @@ require_once("set.php");
 class X0Controller extends X0{
 
 
-    private $queue;
-    private $isGameWon;
-    private $set;
-    public function __construct( $gameState, $queue, $set = []) {
+    protected $queue;
+    protected $isGameWon;
+    protected $set;
+    public function __construct( $gameState, $queue=[], $set = []) {
         parent::__construct($gameState);
         $this->queue = new Queue(6, $queue);
         $this->modifyGameState();
         $this->set = new Set($set);
     }
 
-    private function isCellOccupied ($cell) {
+    protected function isCellOccupied ($cell) {
         if($this->chunks[$cell] == "00")  return false;
         return true;
     }
@@ -67,48 +67,9 @@ class X0Controller extends X0{
         return $this->isGameWon;
     }
 
-    private function getChunks() {
-        return $this->chunks;
-    }
    
-    public function getSet() {return $this->set;}
-    private function getGameState() {return $this->gameState;}
+   
+ 
 
-    public function bestMove( $turn,$set, $originalCell = 0,$depth = 100) {
-        // If the game is already won, return null as there's no move to make
-        if ($this->isGameWon || $depth == 0 || $set->contains($this->getGameState())) {
-            return null;
-        }
-
-        // Get the current game state chunks
-        $chunks = $this->getChunks();
-
-        // Check each cell to find the best move
-        for ($cell = 1; $cell <= 9; $cell++) {
-            // Check if the cell is occupied
-            if (!$this->isCellOccupied($cell)) {
-                // Simulate making a turn in this cell
-                $tempChunks = $chunks;
-                $tempChunks[$cell] = $this->turn;
-                $tempGameState = implode("", $tempChunks);
-                $set->add($tempGameState);
-                // Create a temporary controller with the simulated game state
-                $tempController = new X0Controller($tempGameState, $this->queue->getElements(), $set->toArray());
-
-                // If this move leads to winning the game, return the cell
-                if ($tempController->getIsGameWon() == $turn) {
-                    if($originalCell != 0)
-                        return $originalCell;
-                    return $cell;
-                }
-                else  {
-                    if($originalCell != 0)
-                        $tempController->bestMove($turn, $set, $originalCell, $depth-1 );
-                    else $tempController->bestMove($turn, $set, $cell, $depth-1 );}
-            }
-        }
-
-        // If no winning move is found, return null
-        return null;
-    }
+   
 }

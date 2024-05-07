@@ -80,6 +80,7 @@
 .board-page .section-table form input{
     background: transparent;
     font-size: 7rem;
+    cursor: pointer;
 }
 .reset-position {
     display: flex;
@@ -114,4 +115,10 @@
     font-size: 3rem;
     font-weight: 700;
     
+}
+.board-page .player-section p.color-X{
+    color: red;
+}
+.board-page .player-section p.color-0{
+    color: green;
 }
