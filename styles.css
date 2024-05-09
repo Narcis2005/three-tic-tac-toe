@@ -1,3 +1,4 @@
+
 .section-table{
     display: flex;
     justify-content: center;
@@ -7,12 +8,15 @@
     display:flex;
     width: 400px;
     height: 400px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 
 }
 .form-table>*{
-    flex:33%;
-    width: 33%;
+    width: 100%;
+    flex:1;
+    display: flex;
 }
 .main-page {
     background-color: #ebdcb2;
@@ -78,9 +82,14 @@
     background: transparent;
 } */
 .board-page .section-table form input{
+    display: block;
     background: transparent;
     font-size: 7rem;
     cursor: pointer;
+    width: 33%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 .reset-position {
     display: flex;

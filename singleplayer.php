@@ -39,9 +39,22 @@
             echo $_SESSION["bestMove"];?>
         <section class="section-table">
             <form action="php/x-0-singleplayer.inc.php<?php echo $playerParam ;?>" method="post" class="form-table">
-                <?php for($i = 1; $i<=9; $i++) {
+                <div>
+                    <?php for($i = 1; $i<=3; $i++) {
+                        echo ("<input type='submit' class='color-".$X0->getCellValue($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
+                    } ?>
+                </div>
+                <div>
+                    <?php for($i = 4; $i<=6; $i++) {
                     echo ("<input type='submit' class='color-".$X0->getCellValue($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
                 } ?>
+                </div>
+                <div>
+                    <?php for($i = 7; $i<=9; $i++) {
+                    echo ("<input type='submit' class='color-".$X0->getCellValue($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
+                } ?>
+                </div>
+
             </form>
         </section>
         <div class="reset-position">

@@ -5,12 +5,12 @@ class X0Bot extends X0Controller {
 
     public function __construct( $gameState, $queue=[], $set = [], $player) {
         parent::__construct($gameState, $queue, $set);
-        if($player = "x") {
+        if($player == "x") {
             $this->player = "10";
         }
         else $this->player = "01";
     }
-     private function getChunks() {
+     private function getChunks():array {
         return $this->chunks;
     }
      private function getGameState() {return $this->gameState;}
