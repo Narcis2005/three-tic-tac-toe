@@ -1,5 +1,5 @@
 <?php 
-    include("php/x-0.php");
+    require_once("php/x-0.php");
     session_start();
     ?>
 <!DOCTYPE html>
@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <?php 
-        $playAs = "10";
+        $playAs = X0::X_MARK;
         $X0 = new X0($_SESSION["pos"] ?? null);
         $playerParam = '';
         if(isset($_GET['player'])) {
@@ -31,7 +31,7 @@
             
         }
         else {?>
-            <p>You play as <?php  echo $playAs == "10" ? "X" : "0"?></p>
+            <p>You play as <?php  echo $playAs == X0::X_MARK ? "X" : "0"?></p>
             <?php  }?>
 
         </section>

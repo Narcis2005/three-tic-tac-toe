@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include ("./x-0.controller.php");
+    require_once ("./x-0.controller.php");
     for ($i = 1; $i <= 9; $i++) {
         $cellName = 'cell-' . $i;
         if (isset($_POST[$cellName])) {

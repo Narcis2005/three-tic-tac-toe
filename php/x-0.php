@@ -9,7 +9,8 @@ class X0 {
     protected $turn;
 
     public function __construct($gameState = null) {
-        $this->gameState = $gameState ?? self::X_MARK . str_repeat(self::EMPTY_CELL, 9);
+        $this->gameState = $gameState ?? self::X_MARK //the first turn is x
+         . str_repeat(self::EMPTY_CELL, 9); //the board, that initially is empty
         $this->initiateChunksFromGameState($this->gameState);
         $this->turn = $this->chunks[0];
     }

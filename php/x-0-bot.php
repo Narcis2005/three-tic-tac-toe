@@ -1,20 +1,23 @@
 <?php
 require_once("x-0.controller.php");
+require_once("set.php");
+
 class X0Bot extends X0Controller {
     private $player;
-
-    public function __construct( $gameState, $queue=[], $set = [], $player) {
-        parent::__construct($gameState, $queue, $set);
+    static $times = 0;
+    static $set;
+    public function __construct( $gameState, $queue=[], $player) {
+        parent::__construct($gameState, $queue);
         if($player == "x") {
-            $this->player = "10";
+            $this->player = X0::X_MARK;
         }
-        else $this->player = "01";
+        else $this->player = X0::O_MARK;
     }
      private function getChunks():array {
         return $this->chunks;
     }
      private function getGameState() {return $this->gameState;}
-    public function getSet() {return $this->set;}
+    // public function getSet() {return $this->set;}
 
    
     public function bestMove($turn) {
@@ -32,8 +35,8 @@ class X0Bot extends X0Controller {
         if($winningMove != null && $blockingMove == null) return $winningMove;
         else if($blockingMove != null && $winningMove == null) return $blockingMove;
         if($blockingMove != null && $winningMove != null) {
-             if($winningDepth > $blockingDepth ) return $winningMove;
-            else if($blockingDepth >= $winningDepth) return $blockingMove;
+             if($winningDepth >= $blockingDepth ) return $winningMove;
+            else if($blockingDepth > $winningDepth) return $blockingMove;
         }
 
 
@@ -43,7 +46,8 @@ class X0Bot extends X0Controller {
     
     private function findWinningMove($turn, $currentTurn ,$originalCell=0, $maxDepth=6) {
     //   Get the current game state chunks
-    if ($this->isGameWon || $maxDepth == 0 ) {
+    // if(X0Bot::$set == null) X0Bot::$set = new Set([]);
+    if ($this->isGameWon || $maxDepth == 0) {
         return array(null, null);
     }
         $chunks = $this->getChunks();
@@ -51,28 +55,30 @@ class X0Bot extends X0Controller {
         // Check each cell to find the best move
         for ($cell = 1; $cell <= 9; $cell++) {
             // Check if the cell is occupied
-
+            X0Bot::$times++;
             if (!$this->isCellOccupied($cell)) {
                 // Simulate making a turn in this cell
                 $tempChunks = $chunks;
                 $tempChunks[0] = $currentTurn;
-                $tempChunks[$cell] = $currentTurn;
                 $tempGameState = implode("", $tempChunks);
-                // $set->add($tempGameState);
-                // Create a temporary controller with the simulated game state
-                $tempController = new X0Bot($tempGameState, $this->queue->getElements(), [], $this->player);
+                // Create a temporary class with the simulated game state
+                $newClass = new X0Bot($tempGameState, $this->queue->getElements(), $this->player);
+                $newClass->makeTurn($cell);
+                if(X0Bot::$set->isElementInSet($newClass->gameState, $newClass->queue->getElements())) return;
+                X0Bot::$set->addPositionAndQueue( $newClass->getGameState(), $newClass->queue->getElements()); //for value,not reference
+            
 
                 // If this move leads to winning the game, return the cell
-                if ($tempController->getIsGameWon() == $turn) {
+                if ($newClass->getIsGameWon() == $turn) {
                     if($originalCell != 0)
                         return array($originalCell, $maxDepth);
                     return array($cell, $maxDepth);
                 }
                 else  {
-                    $otherTurn = $currentTurn == "10" ? "01" : "10";
+                    $otherTurn = $currentTurn == X0::X_MARK ? X0::O_MARK : X0::X_MARK;
                     if($originalCell != 0)
-                        $tempController->findWinningMove($turn, $otherTurn,$originalCell, $maxDepth-1 );
-                    else $tempController->findWinningMove($turn,$otherTurn, $cell, $maxDepth-1 );}
+                        $newClass->findWinningMove($turn, $otherTurn,$originalCell, $maxDepth-1 );
+                    else $newClass->findWinningMove($turn,$otherTurn, $cell, $maxDepth-1 );}
             }
         }
     }
@@ -85,12 +91,12 @@ class X0Bot extends X0Controller {
     
     private function getRandomMove() {
          // If center is free, play it
-        if($this->chunks[5] == "00") return 5;
+        if($this->chunks[5] == X0::EMPTY_CELL) return 5;
         //If not, play a random move
         $validIndices = [];
 
         foreach ($this->chunks as $key => $value) {
-            if ($value === "00") {
+            if ($value === X0::EMPTY_CELL) {
                 $validIndices[] = $key;
             }
         }
@@ -110,3 +116,4 @@ class X0Bot extends X0Controller {
         return $this->gameState;
     }
 }
+X0Bot::$set = new Set([]);

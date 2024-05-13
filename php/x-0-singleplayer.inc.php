@@ -1,13 +1,13 @@
 <?php
     session_start();
-    include ("./x-0-bot.php");
+    require_once ("./x-0-bot.php");
     for ($i = 1; $i <= 9; $i++) {
         $cellName = 'cell-' . $i;
         if (isset($_POST[$cellName] )&& isset($_GET["player"])) {
             
             $pos = $_SESSION["pos"] ?? null;
             $queue = $_SESSION["queue"] ?? null;
-            $x0Bot = new X0Bot($pos, $queue, null, $_GET["player"]);
+            $x0Bot = new X0Bot($pos, $queue, $_GET["player"]);
             $x0Bot->makeTurn($i);
             $_SESSION["pos"] = $x0Bot->makeBotMove();
             $_SESSION["queue"] =  $x0Bot->getQueue();

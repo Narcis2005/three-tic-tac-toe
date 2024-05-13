@@ -5,32 +5,32 @@ require_once("set.php");
 class X0Controller extends X0{
     protected $queue;
     protected $isGameWon;
-    protected $set;
-    public function __construct( ?string $gameState, ?array $queue = [], ?array $set = []) {
+   
+   
+    public function __construct( ?string $gameState, ?array $queue = []) {
         parent::__construct($gameState);
         $this->queue = new Queue(6, $queue);
         $this->checkWinningConditions();
-        $this->set = new Set($set);
     }
 
     protected function isCellOccupied ($cell):bool {
-        if($this->chunks[$cell] == "00")  return false;
+        if($this->chunks[$cell] == X0::EMPTY_CELL)  return false;
         return true;
     }
     private function addCellToQueue ($cell):void {
         $cellToRemove = $this->queue->addCellToQueue( $cell);
-        if( $cellToRemove ) $this->chunks[$cellToRemove] = "00";
+        if( $cellToRemove ) $this->chunks[$cellToRemove] = X0::EMPTY_CELL;
     }
     private function addCellToChunks($cell):void {
         $this->chunks[$cell] = $this->turn;
     }
     private function changeTurn():void {
         if( $this->isGameWon ) return;
-        if($this->turn == "10") {
-            $this->turn = "01";
+        if($this->turn == X0::X_MARK) {
+            $this->turn = X0::O_MARK;
         }
         else{
-            $this->turn = "10";
+            $this->turn = X0::X_MARK;
         }
     }
     private function checkWinningConditions(): void {
@@ -42,7 +42,7 @@ class X0Controller extends X0{
 
         foreach ($winningConditions as $condition) {
             [$a, $b, $c] = $condition;
-            if ($this->chunks[$a] !== "00" && $this->chunks[$a] === $this->chunks[$b] && $this->chunks[$b] === $this->chunks[$c]) {
+            if ($this->chunks[$a] !== X0::EMPTY_CELL && $this->chunks[$a] === $this->chunks[$b] && $this->chunks[$b] === $this->chunks[$c]) {
                 $this->isGameWon = $this->turn;
                 return;
             }

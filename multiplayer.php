@@ -1,5 +1,5 @@
 <?php 
-    include("php/x-0.php");
+    require_once("php/x-0.php");
     session_start();
     ?>
 <!DOCTYPE html>

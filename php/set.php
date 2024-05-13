@@ -1,39 +1,34 @@
 <?php
 class Set {
-    private $elements;
+    private $elements = [];
 
-    public function __construct($elements = []) {
-        if(is_array($elements))
-            $this->elements = $elements;
-          else  $this->elements = [];
-    }
-
-    public function add($element) {
-        if (!$this->contains($element)) {
-            $this->elements[] = $element;
+    public function __construct(?array $array) {
+        if (is_array($array)) { 
+            $this->elements = $array;
         }
     }
-
-    public function remove($element) {
-        $index = array_search($element, $this->elements);
-        if ($index !== false) {
-            array_splice($this->elements, $index, 1);
+    public function addPositionAndQueue($position, $queue) {
+        if (!isset($this->elements[$position])) {
+            $this->elements[$position] = array();
         }
+        $this->elements[$position][] = $queue;
     }
 
-    public function contains($element) {
-        return in_array($element, $this->elements);
-    }
+    // public function remove($array) {
+    //     $key = array_search($array, $this->elements);
+    //     if ($key !== false) {
+    //         unset($this->elements[$key]);
+    //     }
+    // }
 
-    public function size() {
-        return count($this->elements);
-    }
-
-    public function toArray() {
-        return $this->elements;
-    }
-
-    public function clear() {
-        $this->elements = [];
+    // public function getElements() {
+    //     return $this->elements;
+    // }
+    public function isElementInSet($position, $queue) {
+        if(!isset($this->elements[$position])) return false;
+        foreach ($this->elements[$position] as $element) { 
+            if($queue == $element) return true;
+        }
+        return false;
     }
 }
