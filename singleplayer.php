@@ -12,13 +12,39 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <?php 
-        $playAs = X0::X_MARK;
-        $X0 = new X0($_SESSION["pos"] ?? null);
+        
+        $initialGame = "10000000000000000000";
         $playerParam = '';
         if(isset($_GET['player'])) {
             $player = $_GET['player'];
             $playerParam = isset($player) ? '?player=' . urlencode($player) : '';
         }
+        function getRandomGeneratedInitialPosition() {
+            $pos = "01";
+            $randomNumber = mt_rand(1, 9);
+            for($j = 1; $j<=9; $j++) {
+                if($j == $randomNumber) $pos .= "10";
+                else $pos .= "00";
+            }
+            return[$randomNumber, $pos];
+        }
+        $queue = [];
+        
+        if($player == '0') {
+            $result = getRandomGeneratedInitialPosition();
+            $queueIndex = $result[0];
+            $initialGame = $result[1];
+            $queue = [$queueIndex];
+         }
+         if(!isset($_SESSION["pos"])) {
+         $_SESSION["pos"] = $initialGame;
+        }
+        if(!isset($_SESSION["queue"])) {
+            $_SESSION["queue"] = $queue;
+           }
+        $playAs = $player == "x" ? X0::X_MARK : X0::O_MARK;
+        $X0 = new X0($_SESSION["pos"] ?? $initialGame, $_SESSION["queue"] ?? $queue);
+      
       
 ?>
 
@@ -31,7 +57,7 @@
             
         }
         else {?>
-            <p>You play as <?php  echo $playAs == X0::X_MARK ? "X" : "0"?></p>
+            <p>You play as <?php  echo $player?></p>
             <?php  }?>
 
         </section>
@@ -41,18 +67,15 @@
             <form action="php/x-0-singleplayer.inc.php<?php echo $playerParam ;?>" method="post" class="form-table">
                 <div>
                     <?php for($i = 1; $i<=3; $i++) {
-                        echo ("<input type='submit' class='color-".$X0->getCellValue($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
-                    } ?>
+                        echo ("<input type='submit' class='".$X0->getClassForCellAge($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");                    } ?>
                 </div>
                 <div>
                     <?php for($i = 4; $i<=6; $i++) {
-                    echo ("<input type='submit' class='color-".$X0->getCellValue($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
-                } ?>
+                        echo ("<input type='submit' class='".$X0->getClassForCellAge($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");                } ?>
                 </div>
                 <div>
                     <?php for($i = 7; $i<=9; $i++) {
-                    echo ("<input type='submit' class='color-".$X0->getCellValue($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
-                } ?>
+                        echo ("<input type='submit' class='".$X0->getClassForCellAge($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");                } ?>
                 </div>
 
             </form>

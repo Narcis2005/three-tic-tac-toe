@@ -1,15 +1,11 @@
 <?php
 require_once("x-0.php");
-require_once("queue.php");
-require_once("set.php");
 class X0Controller extends X0{
-    protected $queue;
     protected $isGameWon;
    
    
     public function __construct( ?string $gameState, ?array $queue = []) {
-        parent::__construct($gameState);
-        $this->queue = new Queue(6, $queue);
+        parent::__construct($gameState, $queue);
         $this->checkWinningConditions();
     }
 
@@ -17,10 +13,7 @@ class X0Controller extends X0{
         if($this->chunks[$cell] == X0::EMPTY_CELL)  return false;
         return true;
     }
-    private function addCellToQueue ($cell):void {
-        $cellToRemove = $this->queue->addCellToQueue( $cell);
-        if( $cellToRemove ) $this->chunks[$cellToRemove] = X0::EMPTY_CELL;
-    }
+   
     private function addCellToChunks($cell):void {
         $this->chunks[$cell] = $this->turn;
     }
@@ -59,9 +52,7 @@ class X0Controller extends X0{
         $this->gameState = implode("", $this->chunks);
         return $this->gameState;
     }
-    public function getQueue(): array {
-        return $this->queue->getElements();
-    }
+    
 
     public function getIsGameWon(): ?string {
         return $this->isGameWon;

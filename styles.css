@@ -110,11 +110,14 @@
     font-size: 1.235rem;
     opacity: 0.8;
 }
-.board-page form input.color-X{
-    color: red;
+.board-page form input.blue{
+    color:blue;
 }
-.board-page form input.color-0{
-    color: green;
+.board-page form input.yellow{
+    color: yellow;
+}
+.board-page form input.red{
+    color: red;
 }
 .board-page .player-section{
     text-align: center;

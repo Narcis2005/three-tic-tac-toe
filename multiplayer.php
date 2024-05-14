@@ -12,9 +12,9 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <?php 
-        $X0 = new X0($_SESSION["pos"] ?? null);
-     
-?>
+        $X0 = new X0($_SESSION["pos"] ?? null, $_SESSION["queue"] ?? null );
+        
+    ?>
 
     <body class="board-page">
         <section class="player-section">
@@ -33,18 +33,18 @@
             <form action="php/x-0.inc.php" method="post" class="form-table">
                 <div>
                     <?php for($i = 1; $i<=3; $i++) {
-                        echo ("<input type='submit' class='color-".$X0->getCellValue($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
+                        echo ("<input type='submit' class='".$X0->getClassForCellAge($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
                     } ?>
                 </div>
                 <div>
                     <?php for($i = 4; $i<=6; $i++) {
-                    echo ("<input type='submit' class='color-".$X0->getCellValue($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
-                } ?>
+                        echo ("<input type='submit' class='".$X0->getClassForCellAge($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
+                    } ?>
                 </div>
                 <div>
                     <?php for($i = 7; $i<=9; $i++) {
-                    echo ("<input type='submit' class='color-".$X0->getCellValue($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
-                } ?>
+                        echo ("<input type='submit' class='".$X0->getClassForCellAge($i)."' value='".$X0->getCellValue($i)."' name='cell-".$i. "'/>");
+                    } ?>
                 </div>
             </form>
         </section>
